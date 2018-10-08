@@ -5,9 +5,7 @@ $(document).ready(function(){
 		var n= Math.round($("#loanduration").val())
 		var duration = $('input:radio[name="tenure"]:checked').val()
 		var loanFrom = $('#loanfrom').val()
-		var loanYearFrom = parseInt(loanFrom.split('-')[0])
-		var loanMonthFrom = parseInt(loanFrom.split('-')[1])
-		data = {'principal':p,'interest':r,'duration':n,'startMonth':loanMonthFrom,'startYear':loanYearFrom,'durationType':duration}
+		data = {'principal':p,'interest':r,'duration':n,'fromemi':loanFrom,'durationType':duration}
 	    resultdata = ajaxCall('get','/emi/emi_result/',data,false)
 	    if(resultdata.status=="Success"){
 	    	console.log("resultdata===========>",resultdata)

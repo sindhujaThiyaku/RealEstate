@@ -30,27 +30,29 @@ redis_con = redis.StrictRedis(host="localhost", port="6379", db="0")
 @api_view(['GET'])
 @renderer_classes((TemplateHTMLRenderer,))
 @permission_classes((AllowAny,))
-@login_required(login_url='/login/')
+# @login_required(login_url='/login/')
 def EMITemplate(request):
     return Response({'template':'emicalc'},template_name='emi_page.html')
 
 @api_view(['GET'])
 @permission_classes((AllowAny,))
-@login_required(login_url='/login/')
+# @login_required(login_url='/login/')
 def emiCalculate(request):
     try:
         json_data = {}
         principal = request.GET.get('principal')
         rate = request.GET.get('interest')
         duration = request.GET.get('duration')
-        startMonth = request.GET.get('startMonth')
-        startYear = request.GET.get('startYear')
+        fromemi = request.GET.get('fromemi')
         durationType = request.GET.get('durationType')
         monthNames = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"]
         monthDict = {}
         loanDict = {}
-        if principal and rate and duration and startMonth and startYear and durationType:
+        if principal and rate and duration and fromemi and durationType:
+            print "fromemi",fromemi
+            startMonth = fromemi.split('-')[1]
+            startYear =  fromemi.split('-')[0] 
             principal = float(principal)
             rate = float(rate)
             duration = float(duration)
@@ -62,11 +64,11 @@ def emiCalculate(request):
             InterestPay =  float((emi*duration)-principal)
             totalPay = float(principal + InterestPay)
             for i in range(1,int(duration)+1):
-                interstRateMonth = float(rate) * float(principal)
-                principalMonth = float(emi) - float(interstRateMonth)
+                interestRateMonth = float(rate) * float(principal)
+                principalMonth = float(emi) - float(interestRateMonth)
                 loanRepaid = (principalMonth *100)/float(principal)
                 principal = float(principal) - principalMonth;   
-                totalVal = {'Principal':round(principalMonth) ,'Interest':round(interstRateMonth) , 'Total Payment':round(emi),'Balance':round(principal),'Loan Paid':round(loanRepaid)}
+                totalVal = {'Principal':round(principalMonth) ,'Interest':round(interestRateMonth) ,'Total Payment':round(emi),'Balance':round(principal),'Loan Paid':round(loanRepaid)}
                 monthName = monthNames[int(startMonth) - 1]
                 monthDict[monthName] = totalVal
                 loanDict[startYear] = monthDict
