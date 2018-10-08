@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import datetime
-
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,7 +27,7 @@ SECRET_KEY = '=yh20yf$9=-0le!8(n8p+1lx#6k!-1#3@l9ma*tl-5q!+apq=!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['builderhut.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -86,7 +86,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-		        'django.template.context_processors.media',
+		'django.template.context_processors.media',
             ],
         },
     },
@@ -101,13 +101,15 @@ WSGI_APPLICATION = 'realEstate.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd43on7d2auafpm',
-        'USER': 'gyhwezlvwqvnry',
-        'PASSWORD': '9fe96f0e06d3c7550bb8962c2626ea95acc685cee2dc09ecc5a17384f0fd0c9f',
-        'HOST': 'ec2-54-235-73-241.compute-1.amazonaws.com',
+        'NAME': 'realEstate',
+        'USER': 'next',
+        'PASSWORD': 'next',
+        'HOST': 'localhost',
         'PORT': '5432'
     }
 }
+
+DATABASES = {'default': dj_database_url.config(default='postgres://next:next@localhost:5432/db')}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
