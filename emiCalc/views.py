@@ -21,17 +21,17 @@ redis_con = redis.StrictRedis(host="localhost", port="6379", db="0")
 def EMITemplate(request):
     return Response({'template':'emicalc'},template_name='emi_page.html')
 
-@api_view(['GET'])
+@api_view(['POST'])
 @permission_classes((AllowAny,))
 # @login_required(login_url='/login/')
 def emiCalculate(request):
     try:
         json_data = {}
-        principal = request.GET.get('principal')
-        rate = request.GET.get('interest')
-        duration = request.GET.get('duration')
-        fromemi = request.GET.get('fromemi')
-        durationType = request.GET.get('durationType')
+        principal = request.POST.get('principal')
+        rate = request.POST.get('interest')
+        duration = request.POST.get('duration')
+        fromemi = request.POST.get('fromemi')
+        durationType = request.POST.get('durationType')
         monthNames = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"]
         monthDict = {}
