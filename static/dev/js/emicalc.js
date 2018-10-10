@@ -1,12 +1,18 @@
 $(document).ready(function(){
+	dataLoan = {'income':50000,'interest':1.5,'duration':2,'durationType':'Y','otherEmi':JSON.stringify(['1000','2000'])}
+	resultdata = ajaxCall('post','/emi/emi_result/',dataLoan,false)
+    if(resultdata.status=="Success"){
+    	console.log("resultdata===========>",resultdata)
+    }
     $("#loangetinfo").click(function(){
 	    var p = parseFloat($("#loanAmount").val())
 		var r = parseFloat($("#interestRate").val())
 		var n= Math.round($("#loanduration").val())
 		var duration = $('input:radio[name="tenure"]:checked').val()
 		var loanFrom = $('#loanfrom').val()
-		data = {'principal':p,'interest':r,'duration':n,'fromemi':loanFrom,'durationType':duration,csrfmiddlewaretoken:getCookie('csrftoken')}
-	    resultdata = ajaxCall('get','/emi/emi_result/',data,false)
+		dataEmi = {'principal':p,'interest':r,'duration':n,'fromemi':loanFrom,'durationType':duration}
+	    console.log(dataEmi)
+	    resultdata = ajaxCall('post','/emi/emi_result/',dataEmi,false)
 	    if(resultdata.status=="Success"){
 	    	console.log("resultdata===========>",resultdata)
 	    }
