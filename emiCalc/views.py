@@ -96,6 +96,7 @@ def emiCalculate(request):
         else:
             json_data['status'] = "Failed"
     except Exception as e:
+        print "eeeeeeeeeeeee",e
         json_data['status'] = "exception"
         json_data['exception'] = e
     return Response(json_data)
