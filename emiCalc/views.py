@@ -30,13 +30,13 @@ def emiCalculate(request):
     try:
         json_data = {}
         totalEmi = 0
-        otherEmi = request.POST.get('otherEmi')
-        income = request.POST.get('income')
-        principal = request.POST.get('principal')
-        rate = request.POST.get('interest')
-        duration = request.POST.get('duration')
-        fromemi = request.POST.get('fromemi')
-        durationType = request.POST.get('durationType')
+        otherEmi = request.data.get('otherEmi')
+        income = request.data.get('income')
+        principal = request.data.get('principal')
+        rate = request.data.get('interest')
+        duration = request.data.get('duration')
+        fromemi = request.data.get('fromemi')
+        durationType = request.data.get('durationType')
         monthNames = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"]
         monthDict = {}
@@ -96,7 +96,6 @@ def emiCalculate(request):
         else:
             json_data['status'] = "Failed"
     except Exception as e:
-        print "eeeeeeeeeeeee",e
         json_data['status'] = "exception"
         json_data['exception'] = e
     return Response(json_data)
